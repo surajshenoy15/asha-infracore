@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@layer base {
+  body {
+    font-family: 'Helvetica Neue Condensed Bold', 'Helvetica Neue', Arial, sans-serif;
+    /* line-height: 37px; */
+    /* letter-spacing: %; */
+  }
+}
