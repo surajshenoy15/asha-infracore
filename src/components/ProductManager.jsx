@@ -15,7 +15,7 @@ const ProductManager = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/products');
+      const res = await axios.get('https://asha-infracore-backend.onrender.com/api/products');
       setProducts(res.data);
     } catch (err) {
       console.error('Fetch error:', err);
@@ -44,7 +44,7 @@ const ProductManager = () => {
         }
       });
 
-      await axios.post('http://localhost:5000/api/products/upload', data);
+      await axios.post('https://asha-infracore-backend.onrender.com/api/products/upload', data);
       fetchProducts();
     } catch (err) {
       console.error('Submit failed:', err);
