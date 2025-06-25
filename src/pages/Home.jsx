@@ -34,12 +34,12 @@ const Home = () => {
       <section className="relative bg-gradient-to-r from-gray-900 to-gray-700 text-white py-20">
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <div className="text-left">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 ">
               EXPERIENCE THE STRENGTH<br />
               <span className="text-red-500">OF BOBCAT LOADERS</span>
             </h1>
-            <p className="text-xl mb-8 max-w-3xl mx-auto">
+            <p className="text-xl mb-8 max-w-3xl mx-0">
               Dedicated to Community Empowerment and Eco-Conscious Growth. 
               Doosan Bobcat remains firmly committed to driving sustainable progress.
             </p>
@@ -67,41 +67,63 @@ const Home = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="h-48 bg-gray-300 flex items-center justify-center">
-                <span className="text-gray-600">Loader Image</span>
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold mb-2">Loaders</h3>
-                <Link to="/loaders" className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg inline-block transition-colors">
-                  See More
-                </Link>
-              </div>
-            </div>
+  <div className=" bg-gray-300 flex items-center justify-center">
+    <img
+      src="./quality loader.png" // or use an external URL
+      alt="Loader"
+      className="object-cover h-full w-full"
+    />
+  </div>
+  <div className="p-6 text-center">
+    <h3 className="text-xl font-bold mb-2">Loaders</h3>
+    <Link
+      to="/loaders"
+      className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg inline-block transition-colors"
+    >
+      See More
+    </Link>
+  </div>
+</div>
 
 
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="h-48 bg-gray-300 flex items-center justify-center">
-                <span className="text-gray-600">Attachment Image</span>
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold mb-2">Attachments</h3>
-                <Link to="/attachments" className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg inline-block transition-colors">
-                  See More
-                </Link>
-              </div>
-            </div>
+<div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+  <div className=" bg-gray-300">
+    <img
+      src="./quality attachment.png"
+      alt="Attachments"
+      className="object-cover h-full w-full"
+    />
+  </div>
+  <div className="p-6 text-center">
+    <h3 className="text-xl font-bold mb-2">Attachments</h3>
+    <Link
+      to="/attachments"
+      className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg inline-block transition-colors"
+    >
+      See More
+    </Link>
+  </div>
+</div>
 
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="h-48 bg-gray-300 flex items-center justify-center">
-                <span className="text-gray-600">Mini Excavator Image</span>
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold mb-2">Mini Excavators</h3>
-                <button className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors">
-                  See More
-                </button>
-              </div>
-            </div>
+{/* Mini Excavators Card */}
+<div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+  <div className=" bg-gray-300">
+    <img
+      src="./quality mini.png"
+      alt="Mini Excavators"
+      className="object-cover h-full w-full"
+    />
+  </div>
+  <div className="p-6 text-center">
+    <h3 className="text-xl font-bold mb-2">Mini Excavators</h3>
+    <Link
+      to="/mini-excavators"
+      className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg inline-block transition-colors"
+    >
+      See More
+    </Link>
+  </div>
+</div>
           </div>
         </div>
       </section>
@@ -163,29 +185,39 @@ const Home = () => {
 
       {/* About Section */}
       <section className="py-16 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Asha Infracore: <span className="text-red-500">Tough Machines,</span><br />
-                Trusted Performance.
-              </h2>
-              <p className="text-lg mb-8 text-gray-300">
-                For over a decade, Asha Infracore has been at the forefront of delivering 
-                high-performance construction and industrial machinery across Karnataka. 
-                Built for strength, efficiency, and reliability — our machines and implements 
-                are engineered to handle every challenge on the field.
-              </p>
-              <Link to="/contact" className="bg-[#FF3600] hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold inline-block transition-colors">
-                Contact Us
-              </Link>
-            </div>
-            <div className="h-64 bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-gray-400">Machine Image</span>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="grid md:grid-cols-2 gap-12 items-center">
+      
+      {/* Text Section */}
+      <div>
+        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          Asha Infracore: <span className="text-red-500">Tough Machines,</span><br />
+          Trusted Performance.
+        </h2>
+        <p className="text-lg mb-8 text-gray-300">
+          For over a decade, Asha Infracore has been at the forefront of delivering 
+          high-performance construction and industrial machinery across Karnataka. 
+          Built for strength, efficiency, and reliability — our machines and implements 
+          are engineered to handle every challenge on the field.
+        </p>
+        <Link
+          to="/contact"
+          className="bg-[#FF3600] hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold inline-block transition-colors"
+        >
+          Contact Us
+        </Link>
+      </div>
+
+      {/* Background Image Section */}
+      <div
+        className="h-80 rounded-lg bg-cover bg-center bg-no-repeat shadow-lg"
+        style={{ backgroundImage: "url('./about-bg.png')" }}
+      ></div>
+
+    </div>
+  </div>
+</section>
+
 
       {/* Why Choose Us */}
       <section className="py-16 bg-gray-50">
@@ -198,43 +230,59 @@ const Home = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-              <div className="h-32 bg-gray-300 rounded-lg mb-4 flex items-center justify-center">
-                <span className="text-gray-600">Branches</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Our Branches</h3>
-              <p className="text-gray-600 mb-4">
-                Asha Infracore proudly serves customers through four strategically located branches across Karnataka.
-              </p>
-              <button className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors">
-                See More
-              </button>
-            </div>
+  <div className=" mb-4 flex items-center justify-center overflow-hidden rounded-lg">
+    <img
+      src="./home-branches.png" // Replace with your actual image path
+      alt="Our Branches"
+      className="h-full w-full object-cover"
+    />
+  </div>
+  <h3 className="text-xl font-bold mb-2">Our Branches</h3>
+  <p className="text-gray-600 mb-4">
+    Asha Infracore proudly serves customers through four strategically located branches across Karnataka.
+  </p>
+  <button className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors">
+    See More
+  </button>
+</div>
 
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-              <div className="h-32 bg-gray-300 rounded-lg mb-4 flex items-center justify-center">
-                <span className="text-gray-600">Warranty</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Warranty Services</h3>
-              <p className="text-gray-600 mb-4">
-                Asha Infracore offers robust warranty options designed to maximize your equipment's performance.
-              </p>
-              <button className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors">
-                See More
-              </button>
-            </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-              <div className="h-32 bg-gray-300 rounded-lg mb-4 flex items-center justify-center">
-                <span className="text-gray-600">About Us</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">About us</h3>
-              <p className="text-gray-600 mb-4">
-                Asha Infracore is committed to delivering top-tier construction and industrial solutions.
-              </p>
-              <button className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors">
-                See More
-              </button>
-            </div>
+            {/* Warranty Services Card */}
+<div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
+  <div className=" mb-4 flex items-center justify-center overflow-hidden rounded-lg">
+    <img
+      src="./home-warranty.png"  // Replace with your actual image path
+      alt="Warranty Services"
+      className="h-full w-full object-cover"
+    />
+  </div>
+  <h3 className="text-xl font-bold mb-2">Warranty Services</h3>
+  <p className="text-gray-600 mb-4">
+    Asha Infracore offers robust warranty options designed to maximize your equipment's performance.
+  </p>
+  <button className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors">
+    See More
+  </button>
+</div>
+
+{/* About Us Card */}
+<div className=" bg-white rounded-lg shadow-lg p-10 text-center hover:shadow-xl transition-shadow">
+  <div className=" mb-4 flex items-center justify-center overflow-hidden rounded-lg">
+    <img
+      src="./home-about.png"  // Replace with your actual image path
+      alt="About Us"
+      className="h-full w-full object-cover"
+    />
+  </div>
+  <h3 className="text-xl font-bold mb-2">About Us</h3>
+  <p className="text-gray-600 mb-4">
+    Asha Infracore is committed to delivering top-tier construction and industrial solutions.
+  </p>
+  <button className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors">
+    See More
+  </button>
+</div>
+
           </div>
         </div>
       </section>

@@ -101,7 +101,7 @@ const Footer = () => {
       {/* Bottom Copyright Bar */}
       <div className="bg-red-700 py-4 px-4">
         <div className="max-w-7xl mx-auto text-center text-sm">
-          <p>&copy; 2024 Asha Infracore. All rights reserved.</p>
+          <p>&copy; 2025 Asha Infracore. All rights reserved.</p>
         </div>
       </div>
     </footer>
