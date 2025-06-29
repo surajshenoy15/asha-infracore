@@ -1,60 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Loaders = () => {
-  const [loaders, setLoaders] = useState([]);
-
-  useEffect(() => {
-    const fetchLoaders = async () => {
-      try {
-        const res = await axios.get('https://asha-infracore-backend.onrender.com/api/products');
-        const filtered = res.data.filter(p => p.category === 'loaders');
-        setLoaders(filtered);
-      } catch (err) {
-        console.error('Error fetching loaders:', err);
-      }
-    };
-    fetchLoaders();
-  }, []);
+  const categories = [
+    {
+      name: 'Skid-Steer Loaders',
+      slug: 'skid-steer-loaders',
+      image: './s450 skid-steer 2.png',
+      description:
+        'Discover Bobcat — the global leader in skid-steer loaders.',
+    },
+    {
+      name: 'Compact Track Loaders',
+      slug: 'compact-track-loaders',
+      image: './s70 skid steer 1.png',
+      description:
+        'Designed for terrain flexibility and top-tier performance.',
+    },
+    {
+      name: 'Backhoe Loaders',
+      slug: 'backhoe-loaders',
+      image: './backhoe-m06 4.png',
+      description:
+        'Engineered for power, digging, and versatile performance.',
+    },
+  ];
 
   return (
-    <div className="p-7">
-      <h1 className="text-2xl font-bold mb-8">Loaders</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {loaders.map(loader => (
+    <div className="p-15 max-w-7xl mx-auto">
+      <h1 className="text-3xl font-bold mb-10 text-center text-[#FF3600]">Loaders</h1>
+      <div className="grid md:grid-cols-3 gap-8">
+        {categories.map((cat) => (
           <div
-            key={loader.id}
-            className="bg-white rounded-xl shadow-lg p-8 max-w-sm mx-auto text-left h-120"
+            key={cat.slug}
+            className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow "
           >
-            <div className="mb-5 flex items-center justify-center ">
-              <img
-                src={loader.image_url || loader.image}
-                alt={loader.name}
-                className="max-h-full object-contain"
-              />
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-1">
-              {loader.name}
-            </h3>
-            <p className="text-gray-600 text-s mb-4">
-              {loader.description}
-            </p>
-            <div className="text-s space-y-2">
-              <div className="flex justify-between font-semibold text-gray-800">
-                <span>Horsepower</span>
-                <span className="font-normal">{loader.horsepower} hp</span>
-              </div>
-
-
-              <div className="flex justify-between font-semibold text-gray-800">
-                <span>Operating Weight</span>
-                <span className="font-normal">{loader.weight} kg</span>
-              </div>
-
-              <div className="flex justify-between font-semibold text-gray-800">
-                <span>Dig Depth</span>
-                <span className="font-normal">{loader.dig_depth} mm</span>
-              </div>
+            <img src={cat.image} alt={cat.name} className="w-full  object-contain bg-gray-200" />
+            <div className="p-6">
+              <h2 className="text-xl font-bold text-[#FF3600] mb-4">{cat.name}</h2>
+              <p className="text-gray-600 mb-4">{cat.description}</p>
+              <Link
+                to={`/loaders/${cat.slug}`}
+                className="text-[#FF3600] font-semibold hover:underline"
+              >
+                More Info →
+              </Link>
             </div>
           </div>
         ))}
