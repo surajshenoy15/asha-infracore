@@ -6,14 +6,14 @@ const Loaders = () => {
     {
       name: 'Skid-Steer Loaders',
       slug: 'skid-steer-loaders',
-      image: './s450 skid-steer 2.png',
+      image: './s450-skid-steer-2.png',
       description:
         'Discover Bobcat — the global leader in skid-steer loaders.',
     },
     {
       name: 'Compact Track Loaders',
       slug: 'compact-track-loaders',
-      image: './s70 skid steer 1.png',
+      image: './s70-skid-steer-1.png',
       description:
         'Designed for terrain flexibility and top-tier performance.',
     },
