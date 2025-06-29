@@ -16,15 +16,15 @@ const ProductManager = () => {
   });
 
   const fetchProducts = async () => {
-    try {
-      const res = await fetch('http://localhost:5000/api/products');
-      const data = await res.json();
-      setProducts(data);
-    } catch (err) {
-      alert('Failed to fetch products');
-      console.error('Fetch error:', err);
-    }
-  };
+  try {
+    const response = await axios.get('https://asha-infracore-backend.onrender.com/api/products');
+    setProducts(response.data);
+  } catch (err) {
+    alert('Failed to fetch products');
+    console.error('Fetch error:', err);
+  }
+};
+
 
   useEffect(() => {
     fetchProducts();
@@ -55,15 +55,16 @@ const ProductManager = () => {
       }
     });
 
+      await axios.post('https://asha-infracore-backend.onrender.com/api/products/upload', data);
     try {
       if (formData.id) {
-        await fetch(`http://localhost:5000/api/products/${formData.id}`, {
+        await fetch(`https://asha-infracore-backend.onrender.com/api/products/${formData.id}`, {
           method: 'PUT',
           body: data
         });
         alert('Product updated successfully!');
       } else {
-        await fetch('http://localhost:5000/api/products/upload', {
+        await fetch('https://asha-infracore-backend.onrender.com/api/products/upload', {
           method: 'POST',
           body: data
         });
@@ -113,7 +114,7 @@ const ProductManager = () => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
 
     try {
-      await fetch(`http://localhost:5000/api/products/${id}`, {
+      await fetch(`https://asha-infracore-backend.onrender.com/api/products/${id}`, {
         method: 'DELETE'
       });
       alert('Product deleted successfully!');

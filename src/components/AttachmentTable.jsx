@@ -6,7 +6,7 @@ export default function AttachmentTable() {
   const [form, setForm] = useState({ name: '', description: '', image: null });
 
   const fetchAttachments = async () => {
-    const res = await axios.get('http://localhost:5000/api/attachments');
+    const res = await axios.get('https://asha-infracore-backend.onrender.com/api/attachments');
     setAttachments(res.data);
   };
 
@@ -18,13 +18,13 @@ export default function AttachmentTable() {
   const handleAdd = async () => {
     const data = new FormData();
     Object.entries(form).forEach(([key, val]) => data.append(key, val));
-    await axios.post('http://localhost:5000/api/attachments/upload', data);
+    await axios.post('https://asha-infracore-backend.onrender.com/api/attachments/upload', data);
     setForm({ name: '', description: '', image: null });
     fetchAttachments();
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/attachments/${id}`);
+    await axios.delete(`https://asha-infracore-backend.onrender.com/api/attachments/${id}`);
     fetchAttachments();
   };
 

@@ -23,7 +23,7 @@ const AttachmentManager = () => {
 
   const fetchAttachments = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/attachments');
+      const res = await fetch('https://asha-infracore-backend.onrender.com/api/attachments');
       const data = await res.json();
       setAttachments(data);
     } catch (err) {
@@ -55,14 +55,14 @@ const AttachmentManager = () => {
 
     try {
       if (formData.id) {
-        const res = await fetch(`http://localhost:5000/api/attachments/${formData.id}`, {
+        const res = await fetch(`https://asha-infracore-backend.onrender.com/api/attachments/${formData.id}`, {
           method: 'PUT',
           body: data,
         });
         if (!res.ok) throw new Error('Update failed');
         alert('Attachment updated successfully!');
       } else {
-        const res = await fetch('http://localhost:5000/api/attachments/upload', {
+        const res = await fetch('https://asha-infracore-backend.onrender.com/api/attachments/upload', {
           method: 'POST',
           body: data,
         });
@@ -103,7 +103,7 @@ const AttachmentManager = () => {
     if (!window.confirm('Are you sure you want to delete this attachment?')) return;
 
     try {
-      await fetch(`http://localhost:5000/api/attachments/${id}`, {
+      await fetch(`https://asha-infracore-backend.onrender.com/api/attachments/${id}`, {
         method: 'DELETE',
       });
       fetchAttachments();

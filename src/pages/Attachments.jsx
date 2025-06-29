@@ -9,7 +9,7 @@ const Attachments = () => {
   useEffect(() => {
     const fetchAttachments = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/products');
+        const res = await axios.get('https://asha-infracore-backend.onrender.com/api/products');
         const filtered = res.data.filter(
           (p) => p.category.toLowerCase() === 'attachments'
         );

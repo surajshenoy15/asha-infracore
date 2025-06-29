@@ -8,7 +8,7 @@ const ZeroToThreeT = () => {
   useEffect(() => {
     const fetchExcavators = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/products');
+        const res = await axios.get('https://asha-infracore-backend.onrender.com/api/products');
         const filtered = res.data.filter(
           (p) => p.category === '0-3t-mini-excavators'
         );

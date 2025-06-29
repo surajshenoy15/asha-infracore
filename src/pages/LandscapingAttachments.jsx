@@ -10,7 +10,7 @@ const LandscapingAttachments = () => {
   useEffect(() => {
     const fetchAttachments = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/attachments');
+        const res = await axios.get('https://asha-infracore-backend.onrender.com/api/attachments');
         const filtered = res.data.filter((a) => a.category.toLowerCase() === 'landscaping');
         setAttachments(filtered);
       } catch (err) {
