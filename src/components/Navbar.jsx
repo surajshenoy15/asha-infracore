@@ -23,9 +23,9 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-full overflow-hidden">
-              <img src="/logo asha.png" alt="Asha Logo" className="w-full h-full object-contain" />
+              <img src="/logo-asha.png" alt="Asha Logo" className="w-full h-full object-contain" />
             </div>
-            <img src="/logo text.png" alt="Asha Infracore" className="h-5 w-auto" />
+            <img src="/logo-text.png" alt="Asha Infracore" className="h-5 w-auto" />
           </Link>
 
           {/* Desktop Menu */}
@@ -34,19 +34,51 @@ const Navbar = () => {
               Home
             </Link>
 
-            <div className="relative group">
-              <button className="hover:bg-red-700 px-3 py-2 rounded-md text-lg font-medium transition">
+            {/* Machinery Dropdown */}
+            <div className="relative z-50 group">
+              <button
+                className="px-3 py-2 rounded-md text-lg font-medium transition-all duration-300 ease-in-out hover:bg-red-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white"
+              >
                 Machinery
               </button>
-              <div className="absolute left-0 mt-2 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-hover:visible invisible transition duration-200 z-50">
-                <Link to="/loaders" className="block px-4 py-2 text-sm hover:bg-gray-100">Loaders</Link>
-                <Link to="/attachments" className="block px-4 py-2 text-sm hover:bg-gray-100">Attachments</Link>
-                <Link to="/mini-excavators" className="block px-4 py-2 text-sm hover:bg-gray-100">Mini Excavators</Link>
+              <div className="absolute left-0 mt-2 w-56 bg-white text-black rounded-xl shadow-xl opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 group-hover:visible invisible transition-all duration-300 ease-out origin-top-left ring-1 ring-black/10">
+                <Link to="/loaders" className="block px-5 py-3 text-sm hover:bg-orange-100 hover:text-[#FF3600] transition-colors duration-200 rounded-t-xl">
+                  Loaders
+                </Link>
+                <Link to="/attachments" className="block px-5 py-3 text-sm hover:bg-orange-100 hover:text-[#FF3600] transition-colors duration-200">
+                  Attachments
+                </Link>
+                <Link to="/mini-excavators" className="block px-5 py-3 text-sm hover:bg-orange-100 hover:text-[#FF3600] transition-colors duration-200 rounded-b-xl">
+                  Mini Excavators
+                </Link>
               </div>
             </div>
 
-            <Link to="/contact" className="hover:bg-red-700 px-3 py-2 rounded-md text-lg font-medium transition">
-              Contact
+            {/* Parts Dropdown */}
+            <div className="relative z-50 group">
+              <button
+                className="px-3 py-2 rounded-md text-lg font-medium transition-all duration-300 ease-in-out hover:bg-red-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                Parts
+              </button>
+              <div className="absolute left-0 mt-2 w-56 bg-white text-black rounded-xl shadow-xl opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 group-hover:visible invisible transition-all duration-300 ease-out origin-top-left ring-1 ring-black/10">
+                <Link to="/parts/tires" className="block px-5 py-3 text-sm hover:bg-orange-100 hover:text-[#FF3600] transition-colors duration-200 rounded-t-xl">
+                  Tires
+                </Link>
+                <Link to="/parts/tracks" className="block px-5 py-3 text-sm hover:bg-orange-100 hover:text-[#FF3600] transition-colors duration-200">
+                  Tracks
+                </Link>
+                <Link to="/parts/batteries" className="block px-5 py-3 text-sm hover:bg-orange-100 hover:text-[#FF3600] transition-colors duration-200">
+                  Batteries
+                </Link>
+                <Link to="/parts/fluids" className="block px-5 py-3 text-sm hover:bg-orange-100 hover:text-[#FF3600] transition-colors duration-200 rounded-b-xl">
+                  Fluids
+                </Link>
+              </div>
+            </div>
+
+            <Link to="/services" className="hover:bg-red-700 px-3 py-2 rounded-md text-lg font-medium transition">
+              Services
             </Link>
           </div>
 
@@ -58,7 +90,6 @@ const Navbar = () => {
             <Link to="/contact" className="bg-white text-[#FF3600] px-4 py-2 rounded hover:bg-gray-100 text-sm font-medium">
               CONTACT US
             </Link>
-
             {isLoggedIn ? (
               <>
                 <Link to="/admin" className="bg-yellow-400 px-4 py-2 rounded text-black font-medium flex items-center">
@@ -93,6 +124,7 @@ const Navbar = () => {
         <div className="md:hidden bg-[#FF3600] text-white px-4 pb-4 space-y-2">
           <Link to="/" className="block px-2 py-2 rounded hover:bg-red-700">Home</Link>
 
+          {/* Machinery Mobile */}
           <details className="group">
             <summary className="cursor-pointer px-2 py-2 rounded hover:bg-red-700">Machinery</summary>
             <div className="ml-4">
@@ -102,6 +134,18 @@ const Navbar = () => {
             </div>
           </details>
 
+          {/* Parts Mobile */}
+          <details className="group">
+            <summary className="cursor-pointer px-2 py-2 rounded hover:bg-red-700">Parts</summary>
+            <div className="ml-4">
+              <Link to="/parts/tires" className="block px-2 py-1 text-sm hover:bg-red-800">Tires</Link>
+              <Link to="/parts/tracks" className="block px-2 py-1 text-sm hover:bg-red-800">Tracks</Link>
+              <Link to="/parts/batteries" className="block px-2 py-1 text-sm hover:bg-red-800">Batteries</Link>
+              <Link to="/parts/fluids" className="block px-2 py-1 text-sm hover:bg-red-800">Fluids</Link>
+            </div>
+          </details>
+
+          <Link to="/services" className="block px-2 py-2 rounded hover:bg-red-700">Services</Link>
           <Link to="/contact" className="block px-2 py-2 rounded hover:bg-red-700">Contact</Link>
 
           {isLoggedIn ? (

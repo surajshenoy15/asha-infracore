@@ -10,7 +10,7 @@ const ThreeToSixT = () => {
       try {
         const res = await axios.get('https://asha-infracore-backend.onrender.com/api/products');
         const filtered = res.data.filter(
-          (p) => p.category === '3-6t-mini-excavators'
+          (p) => p.category?.toLowerCase().replace(/\s+/g, '-') === '3-6t-mini-excavators'
         );
         setExcavators(filtered);
       } catch (err) {
@@ -20,6 +20,9 @@ const ThreeToSixT = () => {
 
     fetchExcavators();
   }, []);
+
+  const toSlug = (str) =>
+    str.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
@@ -35,36 +38,40 @@ const ThreeToSixT = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {excavators.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white rounded-lg shadow-md p-6 text-center border border-gray-200"
-          >
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-full h-48 object-contain mb-4"
-            />
-            <h2 className="text-xl font-bold mb-2">{item.name}</h2>
-            <p className="text-gray-700 text-sm mb-3">{item.description}</p>
-            <div className="text-sm text-left text-gray-800 space-y-1">
-              <div className="flex justify-between">
-                <span className="font-semibold">Horsepower:</span>
-                <span>{item.horsepower} hp</span>
+        {excavators.map((item) => {
+          const slug = toSlug(item.name);
+          const imageSrc = item.image1 || item.image || item.image_url || '/default-image.jpg';
+
+          return (
+            <Link
+              to={`/mini-excavators/3-6t-mini-excavators/${slug}`}
+              key={item.id}
+              className="bg-white rounded-lg shadow-md p-6 text-center border border-gray-200 hover:shadow-lg transition-shadow"
+            >
+              <img
+                src={imageSrc}
+                alt={item.name}
+                className="w-full h-48 object-contain mb-4"
+              />
+              <h2 className="text-xl font-bold mb-2">{item.name}</h2>
+              <p className="text-gray-700 text-sm mb-3">{item.description}</p>
+              <div className="text-sm text-left text-gray-800 space-y-1">
+                <div className="flex justify-between">
+                  <span className="font-semibold">Horsepower:</span>
+                  <span>{item.horsepower} hp</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-semibold">Rated Capacity:</span>
+                  <span>{item.rated_operating_capacity} {item.rated_operating_capacity_unit || 'kg'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-semibold">Dig Depth:</span>
+                  <span>{item.dig_depth ? `${item.dig_depth} mm` : '—'}</span>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Rated Capacity:</span>
-                <span>
-                  {item.rated_operating_capacity} {item.rated_operating_capacity_unit || 'kg'}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Dig Depth:</span>
-                <span>{item.dig_depth ? `${item.dig_depth} mm` : '—'}</span>
-              </div>
-            </div>
-          </div>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

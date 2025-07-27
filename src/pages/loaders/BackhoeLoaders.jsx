@@ -21,6 +21,9 @@ const BackhoeLoaders = () => {
     fetchLoaders();
   }, []);
 
+  const toSlug = (str) =>
+    str.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-6 text-red-600">
@@ -35,34 +38,40 @@ const BackhoeLoaders = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {loaders.map((loader) => (
-          <div
-            key={loader.id}
-            className="bg-white rounded-lg shadow-md p-6 text-center border border-gray-200"
-          >
-            <img
-              src={loader.image || loader.image_url}
-              alt={loader.name}
-              className="w-full h-48 object-contain mb-4"
-            />
-            <h2 className="text-xl font-bold mb-2">{loader.name}</h2>
-            <p className="text-gray-700 text-sm mb-3">{loader.description}</p>
-            <div className="text-sm text-left text-gray-800 space-y-1">
-              <div className="flex justify-between">
-                <span className="font-semibold">Horsepower:</span>
-                <span>{loader.horsepower} hp</span>
+        {loaders.map((loader) => {
+          const slug = toSlug(loader.name);
+          const imageSrc = loader.image1 || loader.image || loader.image_url || '/default-image.jpg';
+
+          return (
+            <Link
+              to={`/loaders/backhoe-loaders/${slug}`}
+              key={loader.id}
+              className="bg-white rounded-lg shadow-md p-6 text-center border border-gray-200 hover:shadow-lg transition-shadow"
+            >
+              <img
+                src={imageSrc}
+                alt={loader.name}
+                className="w-full h-48 object-contain mb-4"
+              />
+              <h2 className="text-xl font-bold mb-2">{loader.name}</h2>
+              <p className="text-gray-700 text-sm mb-3">{loader.description}</p>
+              <div className="text-sm text-left text-gray-800 space-y-1">
+                <div className="flex justify-between">
+                  <span className="font-semibold">Horsepower:</span>
+                  <span>{loader.horsepower} hp</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-semibold">Rated Capacity:</span>
+                  <span>{loader.rated_operating_capacity} {loader.rated_operating_capacity_unit || 'kg'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-semibold">Operating Weight:</span>
+                  <span>{loader.operating_weight} kg</span>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Rated Capacity:</span>
-                <span>{loader.rated_operating_capacity} kg</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-semibold">Operating Weight:</span>
-                <span>{loader.operating_weight} kg</span>
-              </div>
-            </div>
-          </div>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

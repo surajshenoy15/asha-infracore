@@ -41,6 +41,8 @@ const SkidSteerLoaders = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {loaders.map((loader) => {
           const slug = toSlug(loader.name);
+          const imageSrc = loader.image1 || loader.image || loader.image_url || '/default-image.jpg';
+
           return (
             <Link
               to={`/loaders/skid-steer-loaders/${slug}`}
@@ -48,7 +50,7 @@ const SkidSteerLoaders = () => {
               className="bg-white rounded-lg shadow-md p-6 text-center border border-gray-200 hover:shadow-lg transition-shadow"
             >
               <img
-                src={loader.image || loader.image_url}
+                src={imageSrc}
                 alt={loader.name}
                 className="w-full h-48 object-contain mb-4"
               />
@@ -61,7 +63,7 @@ const SkidSteerLoaders = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="font-semibold">Rated Capacity:</span>
-                  <span>{loader.rated_operating_capacity} kg</span>
+                  <span>{loader.rated_operating_capacity} {loader.rated_operating_capacity_unit || 'kg'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-semibold">Operating Weight:</span>
