@@ -593,6 +593,13 @@ const handleDuplicate = (item) => {
         {/* Attachment Catalog */}
         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mt-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">Attachment Catalog</h2>
+          <p className="text-sm text-gray-500 mt-1">
+        {searchTerm ? (
+          <>Showing {filteredAttachments.length} of {attachments.length} attachments</>
+        ) : (
+          <>Total: {attachments.length} attachment{attachments.length !== 1 ? 's' : ''}</>
+        )}
+      </p>
           {/* Search Bar */}
 <div className="mb-6">
   <div className="relative max-w-md">
