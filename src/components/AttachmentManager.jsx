@@ -4,12 +4,51 @@ import {
   Image, Settings, Package, Search, CheckCircle, XCircle, AlertCircle
 } from 'lucide-react';
 
+const Toast = ({ message, type, onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  const getToastStyles = () => {
+    switch (type) {
+      case 'success': return 'bg-green-50 text-green-800 border-green-200';
+      case 'error': return 'bg-red-50 text-red-800 border-red-200';
+      case 'warning': return 'bg-yellow-50 text-yellow-800 border-yellow-200';
+      default: return 'bg-blue-50 text-blue-800 border-blue-200';
+    }
+  };
+
+  const getIcon = () => {
+    switch (type) {
+      case 'success': return <CheckCircle size={20} className="text-green-600" />;
+      case 'error': return <XCircle size={20} className="text-red-600" />;
+      case 'warning': return <AlertCircle size={20} className="text-yellow-600" />;
+      default: return <AlertCircle size={20} className="text-blue-600" />;
+    }
+  };
+
+  return (
+    <div className={`fixed top-4 right-4 z-50 p-4 rounded-xl border shadow-lg transition-all duration-300 ${getToastStyles()}`}>
+      <div className="flex items-center gap-3">
+        {getIcon()}
+        <span className="font-medium">{message}</span>
+        <button onClick={onClose} className="ml-2 hover:opacity-70 transition-opacity">
+          <X size={16} />
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const AttachmentManager = () => {
   const [attachments, setAttachments] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [toast, setToast] = useState(null);
   const showToast = (message, type = 'info') => {
+    console.log('showToast called:', message, type);
   setToast({ message, type });
 };
 
@@ -374,44 +413,7 @@ const handleDuplicate = (item) => {
       />
     </div>
   );
-const Toast = ({ message, type, onClose }) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, [onClose]);
 
-  const getToastStyles = () => {
-    switch (type) {
-      case 'success': return 'bg-green-50 text-green-800 border-green-200';
-      case 'error': return 'bg-red-50 text-red-800 border-red-200';
-      case 'warning': return 'bg-yellow-50 text-yellow-800 border-yellow-200';
-      default: return 'bg-blue-50 text-blue-800 border-blue-200';
-    }
-  };
-
-  const getIcon = () => {
-    switch (type) {
-      case 'success': return <CheckCircle size={20} className="text-green-600" />;
-      case 'error': return <XCircle size={20} className="text-red-600" />;
-      case 'warning': return <AlertCircle size={20} className="text-yellow-600" />;
-      default: return <AlertCircle size={20} className="text-blue-600" />;
-    }
-  };
-
-  return (
-    <div className={`fixed top-4 right-4 z-50 p-4 rounded-xl border shadow-lg transition-all duration-300 ${getToastStyles()}`}>
-      <div className="flex items-center gap-3">
-        {getIcon()}
-        <span className="font-medium">{message}</span>
-        <button onClick={onClose} className="ml-2 hover:opacity-70 transition-opacity">
-          <X size={16} />
-        </button>
-      </div>
-    </div>
-  );
-};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
