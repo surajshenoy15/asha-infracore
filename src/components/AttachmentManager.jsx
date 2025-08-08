@@ -222,6 +222,32 @@ useEffect(() => {
     // Set the existing image URL as preview (don't create blob URL for existing images)
     setImagePreview(item.image);
   };
+const handleDuplicate = (item) => {
+  let parsedFeatures = [];
+  try {
+    parsedFeatures = typeof item.features === 'string'
+      ? JSON.parse(item.features)
+      : item.features;
+    if (!Array.isArray(parsedFeatures)) parsedFeatures = [{ title: '', description: '' }];
+  } catch {
+    parsedFeatures = [{ title: '', description: '' }];
+  }
+
+  setFormData({
+    id: null, // Set to null to create a new item
+    name: `${item.name} (Copy)`, // Add "Copy" to distinguish
+    description: item.description,
+    category: item.category,
+    features: parsedFeatures,
+    specifications: item.specifications || '',
+    image: null, // Reset image so user needs to upload new one
+    pdfFile: null,
+    specPdfFile: null,
+  });
+  
+  // Clear image preview since it's a new item
+  setImagePreview(null);
+};
 
   const resetForm = () => {
     // Clean up blob URL if it exists
@@ -684,6 +710,13 @@ useEffect(() => {
                           >
                             <Edit size={16} />
                           </button>
+                          <button
+      onClick={() => handleDuplicate(attachment)}
+      className="p-2 text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+      title="Duplicate Attachment"
+    >
+      <Upload size={16} />
+    </button>
                           <button
                             onClick={() => handleDelete(attachment.id)}
                             className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
