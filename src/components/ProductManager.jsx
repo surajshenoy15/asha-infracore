@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Upload, X, Edit, Trash2, Eye, Package, Settings, Camera, ExternalLink, Image } from 'lucide-react';
+import { Upload, X, Edit, Trash2, Eye, Package, Settings, Camera, ExternalLink, Image, Search, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 
 const ProductManager = () => {
   const [products, setProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+const [filteredProducts, setFilteredProducts] = useState([]);
+const [toast, setToast] = useState(null);
   const [imageModal, setImageModal] = useState({ isOpen: false, imageUrl: '', title: '' });
   const [formData, setFormData] = useState({
   id: null,
@@ -30,6 +33,14 @@ const ProductManager = () => {
     image3: null,
     image4: null,
   });
+  const showToast = (message, type = 'info') => {
+  setToast({ message, type });
+};
+
+const closeToast = () => {
+  setToast(null);
+};
+
 
   // Category display mapping
   const categoryLabels = {
@@ -54,18 +65,33 @@ const ProductManager = () => {
   };
 
   const fetchProducts = async () => {
-    try {
-      const res = await fetch('https://asha-infracore-backend.onrender.com/api/products');
-      const data = await res.json();
-      setProducts(data);
-    } catch (err) {
-      alert('Failed to fetch products');
-    }
-  };
+  try {
+    const res = await fetch('https://asha-infracore-backend.onrender.com/api/products');
+    const data = await res.json();
+    setProducts(data);
+  } catch (err) {
+    showToast('Failed to fetch products', 'error');
+  }
+};
 
   useEffect(() => {
     fetchProducts();
   }, []);
+
+useEffect(() => {
+  // Search filtering logic
+  if (!searchTerm.trim()) {
+    setFilteredProducts(products);
+  } else {
+    const filtered = products.filter(product => 
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.specifications?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  }
+}, [products, searchTerm]);
 
   const handleChange = (e) => {
   const { name, value, files } = e.target;
@@ -83,6 +109,54 @@ const ProductManager = () => {
   }
 };
 
+const handleDuplicate = (product) => {
+  let parsedFeatures = [];
+  try {
+    if (typeof product.features === 'string') {
+      parsedFeatures = JSON.parse(product.features);
+    } else if (Array.isArray(product.features)) {
+      parsedFeatures = product.features;
+    } else {
+      parsedFeatures = [{ title: '', description: '' }];
+    }
+
+    // Ensure it's an array of feature objects
+    if (!Array.isArray(parsedFeatures)) {
+      parsedFeatures = [{ title: '', description: '' }];
+    }
+  } catch (e) {
+    console.error('Invalid features JSON:', e);
+    parsedFeatures = [{ title: '', description: '' }];
+  }
+
+  setFormData({
+    id: null, // Set to null to create a new product
+    name: `${product.name} (Copy)`, // Add "Copy" to distinguish
+    description: product.description || '',
+    horsepower: product.horsepower || '',
+    rated_operating_capacity: product.rated_operating_capacity || '',
+    rated_operating_capacity_unit: product.rated_operating_capacity_unit || 'kg',
+    operating_weight: product.operating_weight || '',
+    dig_depth: product.dig_depth || '',
+    category: product.category || '',
+    features: parsedFeatures,
+    specifications: product.specifications || '',
+    image1: null, // Reset images so user needs to upload new ones
+    image2: null,
+    image3: null,
+    image4: null,
+    pdfFile: null,
+    specPdfFile: null,
+  });
+
+  // Clear image previews since it's a new product
+  setImagePreview({
+    image1: null,
+    image2: null,
+    image3: null,
+    image4: null,
+  });
+};
 
   const handleFeatureChange = (index, field, value) => {
     const updated = [...formData.features];
@@ -120,7 +194,7 @@ const ProductManager = () => {
   try {
     const url = formData.id
       ? `https://asha-infracore-backend.onrender.com/api/products/${formData.id}`
-      : 'https://asha-infracore-backend.onrender.com/api/products'; // Remove '/upload'
+      : 'https://asha-infracore-backend.onrender.com/api/products';
     const method = formData.id ? 'PUT' : 'POST';
 
     await fetch(url, {
@@ -128,11 +202,11 @@ const ProductManager = () => {
       body: data,
     });
 
-    alert(formData.id ? 'Product updated successfully!' : 'Product added successfully!');
+    showToast(formData.id ? 'Product updated successfully!' : 'Product added successfully!', 'success');
     resetForm();
     fetchProducts();
   } catch (err) {
-    alert('Submit failed');
+    showToast('Failed to submit product. Please try again.', 'error');
     console.error('Submit failed:', err);
   }
 };
@@ -215,19 +289,19 @@ const ProductManager = () => {
 
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this product?')) return;
+  if (!window.confirm('Are you sure you want to delete this product?')) return;
 
-    try {
-      await fetch(`https://asha-infracore-backend.onrender.com/api/products/${id}`, {
-        method: 'DELETE',
-      });
-      alert('Product deleted successfully!');
-      fetchProducts();
-    } catch (err) {
-      alert('Failed to delete product');
-      console.error('Delete error:', err);
-    }
-  };
+  try {
+    await fetch(`https://asha-infracore-backend.onrender.com/api/products/${id}`, {
+      method: 'DELETE',
+    });
+    showToast('Product deleted successfully!', 'success');
+    fetchProducts();
+  } catch (err) {
+    showToast('Failed to delete product', 'error');
+    console.error('Delete error:', err);
+  }
+};
 
   const removeImage = (field) => {
     setFormData((prev) => ({ ...prev, [field]: null }));
@@ -288,6 +362,45 @@ const ProductManager = () => {
       />
     </div>
   );
+
+  const Toast = ({ message, type, onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  const getToastStyles = () => {
+    switch (type) {
+      case 'success': return 'bg-green-50 text-green-800 border-green-200';
+      case 'error': return 'bg-red-50 text-red-800 border-red-200';
+      case 'warning': return 'bg-yellow-50 text-yellow-800 border-yellow-200';
+      default: return 'bg-blue-50 text-blue-800 border-blue-200';
+    }
+  };
+
+  const getIcon = () => {
+    switch (type) {
+      case 'success': return <CheckCircle size={20} className="text-green-600" />;
+      case 'error': return <XCircle size={20} className="text-red-600" />;
+      case 'warning': return <AlertCircle size={20} className="text-yellow-600" />;
+      default: return <AlertCircle size={20} className="text-blue-600" />;
+    }
+  };
+
+  return (
+    <div className={`fixed top-4 right-4 z-50 p-4 rounded-xl border shadow-lg transition-all duration-300 ${getToastStyles()}`}>
+      <div className="flex items-center gap-3">
+        {getIcon()}
+        <span className="font-medium">{message}</span>
+        <button onClick={onClose} className="ml-2 hover:opacity-70 transition-opacity">
+          <X size={16} />
+        </button>
+      </div>
+    </div>
+  );
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
@@ -545,6 +658,41 @@ const ProductManager = () => {
         {/* Product Catalog */}
         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mt-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">Product Catalog</h2>
+          <p className="text-sm text-gray-500 mt-1 mb-6">
+    {searchTerm ? (
+      <>Showing {filteredProducts.length} of {products.length} products</>
+    ) : (
+      <>Total: {products.length} product{products.length !== 1 ? 's' : ''}</>
+    )}
+  </p>
+  <div className="mb-6">
+    <div className="relative max-w-md">
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <Search className="h-5 w-5 text-gray-400" />
+      </div>
+      <input
+        type="text"
+        placeholder="Search products by name, description, category, or specs..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#FF3600] focus:border-transparent transition-all placeholder-gray-400"
+      />
+      {searchTerm && (
+        <button
+          onClick={() => setSearchTerm('')}
+          className="absolute inset-y-0 right-0 pr-3 flex items-center"
+        >
+          <X className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+        </button>
+      )}
+    </div>
+    {searchTerm && (
+      <p className="mt-2 text-sm text-gray-600">
+        Found {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} 
+        {searchTerm && ` for "${searchTerm}"`}
+      </p>
+    )}
+  </div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -558,14 +706,14 @@ const ProductManager = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {products.length === 0 ? (
-                  <tr>
-                    <td colSpan="6" className="px-6 py-8 text-center text-gray-500">
-                      No products found. Add your first product above.
-                    </td>
-                  </tr>
-                ) : (
-                  products.map((product) => (
+  {filteredProducts.length === 0 ? (
+    <tr>
+      <td colSpan="6" className="px-6 py-8 text-center text-gray-500">
+        {searchTerm ? `No products found matching "${searchTerm}"` : 'No products found. Add your first product above.'}
+      </td>
+    </tr>
+  ) : (
+    filteredProducts.map((product) => (
                     <tr key={product.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-4">
                         <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
@@ -620,6 +768,13 @@ const ProductManager = () => {
                           >
                             <Edit size={16} />
                           </button>
+                          <button
+      onClick={() => handleDuplicate(product)}
+      className="p-2 text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+      title="Duplicate Product"
+    >
+      <Upload size={16} />
+    </button>
                           <button
                             onClick={() => handleDelete(product.id)}
                             className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -684,6 +839,13 @@ const ProductManager = () => {
             </div>
           </div>
         )}
+        {toast && (
+  <Toast
+    message={toast.message}
+    type={toast.type}
+    onClose={closeToast}
+  />
+)}
       </div>
     </div>
   );
