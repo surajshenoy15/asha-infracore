@@ -7,8 +7,8 @@ import {
 
 const AttachmentManager = () => {
   const [attachments, setAttachments] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-      const [toast, setToast] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [toast, setToast] = useState(null);
   const showToast = (message, type = 'info') => {
   setToast({ message, type });
 };
