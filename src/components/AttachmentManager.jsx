@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
   Upload, X, Edit, Trash2, Eye, Camera, ExternalLink,
-  Image, Settings, Package
+  Image, Settings, Package, Search
 } from 'lucide-react';
 
 const AttachmentManager = () => {
   const [attachments, setAttachments] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+const [filteredAttachments, setFilteredAttachments] = useState([]);
   const [imageModal, setImageModal] = useState({ isOpen: false, imageUrl: '', title: '' });
   const [formData, setFormData] = useState({
     id: null,
@@ -49,16 +51,31 @@ const categoryOptions = [
 };
 
 
+useEffect(() => {
+  fetchAttachments();
+  return () => {
+    // Clean up blob URLs on unmount
+    if (imagePreview?.startsWith('blob:')) {
+      URL.revokeObjectURL(imagePreview);
+    }
+  };
+}, [imagePreview]);
 
-  useEffect(() => {
-    fetchAttachments();
-    return () => {
-      // Clean up blob URLs on unmount
-      if (imagePreview?.startsWith('blob:')) {
-        URL.revokeObjectURL(imagePreview);
-      }
-    };
-  }, [imagePreview]);
+useEffect(() => {
+  // Search filtering logic
+  if (!searchTerm.trim()) {
+    setFilteredAttachments(attachments);
+  } else {
+    const filtered = attachments.filter(attachment => 
+      attachment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      attachment.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      attachment.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      attachment.specifications?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredAttachments(filtered);
+  }
+}, [attachments, searchTerm]);
+
 
   const fetchAttachments = async () => {
     try {
@@ -550,6 +567,35 @@ const categoryOptions = [
         {/* Attachment Catalog */}
         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mt-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">Attachment Catalog</h2>
+          {/* Search Bar */}
+<div className="mb-6">
+  <div className="relative max-w-md">
+    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <Search className="h-5 w-5 text-gray-400" />
+    </div>
+    <input
+      type="text"
+      placeholder="Search attachments by name, description, category, or specs..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#FF3600] focus:border-transparent transition-all placeholder-gray-400"
+    />
+    {searchTerm && (
+      <button
+        onClick={() => setSearchTerm('')}
+        className="absolute inset-y-0 right-0 pr-3 flex items-center"
+      >
+        <X className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+      </button>
+    )}
+  </div>
+  {searchTerm && (
+    <p className="mt-2 text-sm text-gray-600">
+      Found {filteredAttachments.length} attachment{filteredAttachments.length !== 1 ? 's' : ''} 
+      {searchTerm && ` for "${searchTerm}"`}
+    </p>
+  )}
+</div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -563,14 +609,14 @@ const categoryOptions = [
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {attachments.length === 0 ? (
-                  <tr>
-                    <td colSpan="6" className="px-6 py-8 text-center text-gray-500">
-                      No attachments found. Add your first attachment above.
-                    </td>
-                  </tr>
-                ) : (
-                  attachments.map((attachment) => (
+                {filteredAttachments.length === 0 ? (
+  <tr>
+    <td colSpan="6" className="px-6 py-8 text-center text-gray-500">
+      {searchTerm ? `No attachments found matching "${searchTerm}"` : 'No attachments found. Add your first attachment above.'}
+    </td>
+  </tr>
+) : (
+  filteredAttachments.map((attachment) => (
                     <tr key={attachment.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-4">
                         <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
