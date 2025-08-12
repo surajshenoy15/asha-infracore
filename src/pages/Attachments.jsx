@@ -23,7 +23,7 @@ const Attachments = () => {
 
   const categories = [
     { name: 'AGRICULTURE', image: '/categories/agriculture.png' },
-    { name: 'CONSTRUCTION & DEMOLITION', image: '/categories/construction.png' },
+    { name: 'CONSTRUCTION & DEMOLITION', image: '/categories/construction-bg.png' },
     { name: 'FORESTRY', image: '/categories/forestry.png' },
     { name: 'GRADING & LEVELING', image: '/categories/grading.png' },
     { name: 'LANDSCAPING', image: '/categories/landscaping.png' },

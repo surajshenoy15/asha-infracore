@@ -38,7 +38,7 @@ const ConstructionAttachments = () => {
       {/* Banner */}
       <div className="relative h-[400px] overflow-hidden">
         <img
-          src="/categories/construction.png"
+          src="/categories/construction-bg.png"
           alt="Construction Attachments Banner"
           className="absolute inset-0 w-full h-full object-cover"
         />
