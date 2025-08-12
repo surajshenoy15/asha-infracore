@@ -112,23 +112,244 @@ const RoadworkAttachments = () => {
       </div>
 
       {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center items-center space-x-2 pb-12">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`px-4 py-2 border text-sm font-medium rounded transition ${
-                currentPage === page
-                  ? 'bg-red-600 text-white border-red-600'
-                  : 'hover:bg-red-100 hover:text-red-600'
-              }`}
-            >
-              {page}
-            </button>
-          ))}
+      {/* Ultra-Modern Pagination with Advanced Layout */}
+{totalPages > 1 && (
+  <div className="flex flex-col items-center space-y-6 pb-16">
+    {/* Page Info Display */}
+    <div className="text-center">
+      <p className="text-sm text-gray-500 font-medium">
+        Showing page <span className="text-[#ff3600] font-bold">{currentPage}</span> of{' '}
+        <span className="text-gray-700 font-bold">{totalPages}</span>
+      </p>
+    </div>
+
+    {/* Main Pagination Container */}
+    <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-2">
+      <div className="flex items-center space-x-1">
+        
+        {/* Previous Button */}
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={`group relative flex items-center px-6 py-3 text-sm font-semibold rounded-xl transition-all duration-300 transform overflow-hidden ${
+            currentPage === 1
+              ? 'text-gray-300 cursor-not-allowed bg-gray-50 scale-95'
+              : 'text-gray-600 hover:text-white bg-gray-50 hover:bg-[#ff3600] shadow-md hover:shadow-xl hover:scale-105 hover:-translate-y-0.5 active:scale-95'
+          }`}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-[#ff3600] to-[#ff5722] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+          <svg className={`w-4 h-4 mr-2 transition-transform duration-300 relative z-10 ${currentPage !== 1 ? 'group-hover:-translate-x-1' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          <span className="relative z-10">Prev</span>
+        </button>
+
+        {/* Separator */}
+        <div className="w-px h-8 bg-gray-200 mx-2"></div>
+
+        {/* Page Numbers Container */}
+        <div className="flex items-center space-x-1">
+          {(() => {
+            let startPage = Math.max(1, currentPage - 1);
+            let endPage = Math.min(totalPages, startPage + 2);
+            
+            if (endPage - startPage < 2) {
+              startPage = Math.max(1, endPage - 2);
+            }
+
+            const pages = [];
+            
+            // First page with special styling
+            if (startPage > 1) {
+              pages.push(
+                <button
+                  key={1}
+                  onClick={() => handlePageChange(1)}
+                  className="relative w-12 h-12 text-sm font-bold rounded-xl transition-all duration-300 transform bg-gray-50 text-gray-600 hover:bg-[#ff3600] hover:text-white shadow-sm hover:shadow-lg hover:scale-110 hover:-translate-y-1 active:scale-95 overflow-hidden group"
+                >
+                  <span className="relative z-10">1</span>
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#ff3600] to-[#ff5722] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-xl"></div>
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ff3600] to-[#ff5722] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
+                </button>
+              );
+              
+              if (startPage > 2) {
+                pages.push(
+                  <div key="ellipsis1" className="px-3 py-3 text-gray-400">
+                    <div className="flex space-x-1">
+                      <div className="w-1.5 h-1.5 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-1.5 h-1.5 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                      <div className="w-1.5 h-1.5 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div>
+                    </div>
+                  </div>
+                );
+              }
+            }
+
+            // Current range pages
+            for (let i = startPage; i <= endPage; i++) {
+              pages.push(
+                <button
+                  key={i}
+                  onClick={() => handlePageChange(i)}
+                  className={`relative w-12 h-12 text-sm font-bold rounded-xl transition-all duration-300 transform overflow-hidden group ${
+                    currentPage === i
+                      ? 'bg-[#ff3600] text-white shadow-xl scale-110 ring-4 ring-[#ff3600] ring-opacity-20'
+                      : 'bg-gray-50 text-gray-600 hover:bg-[#ff3600] hover:text-white shadow-sm hover:shadow-lg hover:scale-110 hover:-translate-y-1 active:scale-95'
+                  }`}
+                >
+                  <span className="relative z-10">{i}</span>
+                  
+                  {/* Active page gradient background */}
+                  {currentPage === i && (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#ff3600] via-[#ff5722] to-[#ff3600] animate-gradient-x"></div>
+                      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ff3600] to-[#ff5722] rounded-xl opacity-75 blur-sm animate-pulse"></div>
+                    </>
+                  )}
+                  
+                  {/* Hover effect for non-active pages */}
+                  {currentPage !== i && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#ff3600] to-[#ff5722] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-xl"></div>
+                  )}
+                </button>
+              );
+            }
+
+            // Last page
+            if (endPage < totalPages) {
+              if (endPage < totalPages - 1) {
+                pages.push(
+                  <div key="ellipsis2" className="px-3 py-3 text-gray-400">
+                    <div className="flex space-x-1">
+                      <div className="w-1.5 h-1.5 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-1.5 h-1.5 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                      <div className="w-1.5 h-1.5 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div>
+                    </div>
+                  </div>
+                );
+              }
+              
+              pages.push(
+                <button
+                  key={totalPages}
+                  onClick={() => handlePageChange(totalPages)}
+                  className="relative w-12 h-12 text-sm font-bold rounded-xl transition-all duration-300 transform bg-gray-50 text-gray-600 hover:bg-[#ff3600] hover:text-white shadow-sm hover:shadow-lg hover:scale-110 hover:-translate-y-1 active:scale-95 overflow-hidden group"
+                >
+                  <span className="relative z-10">{totalPages}</span>
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#ff3600] to-[#ff5722] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-xl"></div>
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ff3600] to-[#ff5722] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
+                </button>
+              );
+            }
+
+            return pages;
+          })()}
         </div>
-      )}
+
+        {/* Separator */}
+        <div className="w-px h-8 bg-gray-200 mx-2"></div>
+
+        {/* Next Button */}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className={`group relative flex items-center px-6 py-3 text-sm font-semibold rounded-xl transition-all duration-300 transform overflow-hidden ${
+            currentPage === totalPages
+              ? 'text-gray-300 cursor-not-allowed bg-gray-50 scale-95'
+              : 'text-gray-600 hover:text-white bg-gray-50 hover:bg-[#ff3600] shadow-md hover:shadow-xl hover:scale-105 hover:-translate-y-0.5 active:scale-95'
+          }`}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-[#ff3600] to-[#ff5722] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-right"></div>
+          <span className="relative z-10">Next</span>
+          <svg className={`w-4 h-4 ml-2 transition-transform duration-300 relative z-10 ${currentPage !== totalPages ? 'group-hover:translate-x-1' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {/* Progress Indicator */}
+    <div className="w-full max-w-xs">
+      <div className="h-1 bg-gray-200 rounded-full overflow-hidden">
+        <div 
+          className="h-full bg-gradient-to-r from-[#ff3600] to-[#ff5722] rounded-full transition-all duration-500 ease-out"
+          style={{width: `${(currentPage / totalPages) * 100}%`}}
+        ></div>
+      </div>
+    </div>
+
+    {/* Quick Jump (for large page counts) */}
+    {totalPages > 10 && (
+      <div className="flex items-center space-x-3 text-sm">
+        <span className="text-gray-500">Quick jump:</span>
+        <button
+          onClick={() => handlePageChange(1)}
+          className="px-3 py-1 text-xs font-medium text-[#ff3600] hover:text-white hover:bg-[#ff3600] border border-[#ff3600] rounded-lg transition-all duration-200"
+        >
+          First
+        </button>
+        <button
+          onClick={() => handlePageChange(Math.ceil(totalPages / 2))}
+          className="px-3 py-1 text-xs font-medium text-[#ff3600] hover:text-white hover:bg-[#ff3600] border border-[#ff3600] rounded-lg transition-all duration-200"
+        >
+          Middle
+        </button>
+        <button
+          onClick={() => handlePageChange(totalPages)}
+          className="px-3 py-1 text-xs font-medium text-[#ff3600] hover:text-white hover:bg-[#ff3600] border border-[#ff3600] rounded-lg transition-all duration-200"
+        >
+          Last
+        </button>
+      </div>
+    )}
+  </div>
+)}
+
+{/* Enhanced Custom CSS */}
+<style jsx>{`
+  @keyframes gradient-x {
+    0%, 100% {
+      background-size: 200% 200%;
+      background-position: left center;
+    }
+    50% {
+      background-size: 200% 200%;
+      background-position: right center;
+    }
+  }
+  
+  .animate-gradient-x {
+    animation: gradient-x 3s ease infinite;
+    background-size: 200% 200%;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(255, 54, 0, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(255, 54, 0, 0.8), 0 0 30px rgba(255, 54, 0, 0.6);
+    }
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+`}</style>
 
       {/* You Might Also Like */}
       <div className="bg-white py-16 px-4 border-t">
