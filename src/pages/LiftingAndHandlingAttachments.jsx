@@ -44,10 +44,17 @@ const LiftingAttachments = () => {
         />
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <h1
-            className="text-white text-[48px] md:text-[64px] lg:text-[80px] font-extrabold tracking-wider text-center"
-            style={{ fontFamily: "'Triumvirate CG Inserat', Impact, sans-serif" }}
+            className="text-white text-[48px] md:text-[64px] lg:text-[80px] font-black tracking-wider text-center"
+            style={{
+              fontFamily: "'Triumvirate CG Inserat', Impact, sans-serif",
+              textShadow: `
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000`
+            }}
           >
-            LIFTING
+            LIFTING & HANDLING
           </h1>
         </div>
       </div>
