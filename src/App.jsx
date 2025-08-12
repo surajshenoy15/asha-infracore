@@ -47,6 +47,7 @@ import CookieConsent from './components/CookieConsent';
 
 import WarrantyServiceSection from './pages/WarrantyServiceSection';
 import WarrantyStdPage from './pages/warrantystd'; 
+import ProtectionPlus from './pages/Protectionplus';
 
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -122,6 +123,7 @@ function App() {
             <Route path="/services" element={<AshaInfracoreServices />} />
             <Route path="/warranty" element={<WarrantyServiceSection />} />
             <Route path="/warranty/standard" element={<WarrantyStdPage />} />
+            <Route path="/warranty/protection-plus" element={<ProtectionPlus />} />
             <Route path="/machinery" element={<Machinery />} />
             <Route path="/parts" element={<Parts />} />
             <Route path="/parts/tracks" element={<Tracks />} />
