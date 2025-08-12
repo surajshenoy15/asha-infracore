@@ -27,7 +27,7 @@ const WarrantyServiceSection = () => {
       image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       icon: Star,
       features: ['Extended Coverage Options', 'Flexible Payment Plans', '24/7 Premium Support', 'Custom Protection Levels'],
-      price: 'From $299/mo',
+      price: 'Add On',
       popular: true,
     },
   ];
@@ -170,7 +170,7 @@ const WarrantyServiceSection = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <span className="text-2xl font-bold text-gray-900">{plan.price}</span>
-                        {plan.price !== 'Included' && <span className="text-gray-500 ml-1">/month</span>}
+                        {/* {plan.price !== 'Included' && <span className="text-gray-500 ml-1">/month</span>} */}
                       </div>
                       <Link
   to={plan.title === 'Standard Warranty' ? '/warranty/standard' : '/warranty/protection-plus'}
