@@ -29,7 +29,7 @@ const Attachments = () => {
     { name: 'LANDSCAPING', image: '/categories/landscaping.png' },
     { name: 'LIFTING & HANDLING', image: '/categories/lifting.png' },
     { name: 'ROAD WORK', image: '/categories/road-work.png' },
-    { name: 'SNOW REMOVAL', image: '/categories/snow-removal.png' },
+    { name: 'SNOW REMOVAL', image: '/categories/snow-removal.png' },  
   ];
 
   return (
