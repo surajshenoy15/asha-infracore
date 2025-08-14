@@ -1,7 +1,7 @@
 import React from 'react';
 
 const WhatsAppButton = () => {
-  const whatsappUrl = "https://wa.link/2oqjij"; // ✅ Your custom wa.link
+  const whatsappUrl = "https://wa.link/ohakyj"; // ✅ Your custom wa.link
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
