@@ -9,44 +9,45 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Loaders Page -->
-  <url>
-    <loc>https://ashainfracore.com/loaders</loc>
-    <lastmod>2025-08-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+  <!-- General Pages -->
+  <url><loc>https://ashainfracore.com/about-us</loc><lastmod>2025-08-15</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ashainfracore.com/services</loc><lastmod>2025-08-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/warranty</loc><lastmod>2025-08-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/warranty/standard</loc><lastmod>2025-08-15</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ashainfracore.com/warranty/protection-plus</loc><lastmod>2025-08-15</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ashainfracore.com/machinery</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ashainfracore.com/get-quote</loc><lastmod>2025-08-15</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ashainfracore.com/contact-us</loc><lastmod>2025-08-15</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ashainfracore.com/contact</loc><lastmod>2025-08-15</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ashainfracore.com/branches</loc><lastmod>2025-08-15</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 
-  <!-- Mini Excavators Page -->
-  <url>
-    <loc>https://ashainfracore.com/mini-excavators</loc>
-    <lastmod>2025-08-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+  <!-- Parts -->
+  <url><loc>https://ashainfracore.com/parts</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ashainfracore.com/parts/tracks</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/parts/tires</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/parts/batteries</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/parts/fluids</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 
-  <!-- Attachments Page -->
-  <url>
-    <loc>https://ashainfracore.com/attachments</loc>
-    <lastmod>2025-08-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+  <!-- Loaders -->
+  <url><loc>https://ashainfracore.com/loaders</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ashainfracore.com/loaders/skid-steer-loaders</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ashainfracore.com/loaders/compact-track-loaders</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ashainfracore.com/loaders/backhoe-loaders</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 
-  <!-- About Us Page -->
-  <url>
-    <loc>https://ashainfracore.com/about</loc>
-    <lastmod>2025-08-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+  <!-- Mini Excavators -->
+  <url><loc>https://ashainfracore.com/mini-excavators</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ashainfracore.com/mini-excavators/0-3t-mini-excavators</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ashainfracore.com/mini-excavators/3-6t-mini-excavators</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 
-  <!-- Contact Page -->
-  <url>
-    <loc>https://ashainfracore.com/contact</loc>
-    <lastmod>2025-08-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+  <!-- Attachments -->
+  <url><loc>https://ashainfracore.com/attachments</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ashainfracore.com/attachments/agriculture</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/attachments/construction-demolition</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/attachments/forestry</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/attachments/landscaping</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/attachments/road-work</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/attachments/snow-removal</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/attachments/grading-leveling</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ashainfracore.com/attachments/lifting-handling</loc><lastmod>2025-08-15</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 
 </urlset>
