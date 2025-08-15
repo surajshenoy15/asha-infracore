@@ -392,7 +392,7 @@ const ProductDetail = () => {
                 <div className="w-24 h-1 bg-[#FF3600] rounded-full"></div>
               </div>
               <Link 
-                to="/machinery" 
+                to="/loaders" 
                 className="text-[#FF3600] hover:text-[#e84200] font-bold text-lg transition-colors flex items-center gap-2"
               >
                 View all
