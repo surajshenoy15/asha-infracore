@@ -394,7 +394,7 @@ const Home = () => {
       <div className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
         <img src="./home-about.png" alt="About Us" className="rounded-lg mb-4 w-full h-48 object-cover" />
         <h3 className="text-xl font-bold mb-2">About Us</h3>
-        <p className="text-gray-600 mb-4">Delivering top-tier construction and industrial solutions with efficiency and reliability. Built for durability in every environment.</p>
+        <p className="text-gray-600 mb-4">Delivering reliable construction and industrial solutions. Durable in every environment.</p>
         <Link
           to="/about-us"
           className="bg-[#FF3600] hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors inline-block"
