@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",
     "@tailwindcss/vite": "^4.1.10",
+    "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.10.0",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
