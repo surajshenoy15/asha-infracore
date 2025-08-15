@@ -77,7 +77,7 @@ const ProtectionPlus = () => {
                 Your Bobcat® compact equipment is essential to your business. It completes difficult tasks. It keeps your schedule moving. And most importantly, it generates income. Safeguarding your business-critical machines with a Protection Plus® extended warranty from Bobcat is an important part of that strategy.
               </p>
               <p>
-                <strong>For full details on coverage, pricing, and benefits, contact the .</strong>
+                <strong>For full details on coverage, pricing, and benefits, contact the </strong>
                 <span className="text-[#ff3600] font-semibold">Asha Infracore Office</span>
               </p>
             </div>
