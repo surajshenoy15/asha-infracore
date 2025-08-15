@@ -43,19 +43,20 @@ const Footer = () => {
               {/* Social Media Icons */}
               <div className="flex space-x-3 ml-3">
                 <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors"
-                >
-                  <img
-                    src="/Instagram 1.png"
-                    alt="Instagram"
-                    className="w-6 h-6 object-contain"
-                  />
-                </a>
+  href="https://www.linkedin.com/company/asha-infracore/about/"  // <-- replace with your LinkedIn URL
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors"
+>
+  <img
+    src="/linkedin-1.png"  // <-- update with your LinkedIn icon path
+    alt="LinkedIn"
+    className="w-6 h-6 object-contain"
+  />
+</a>
+
                 <a
-                  href="mailto:info@ashainfracore.com"
+                  href="mailto:kkshetty@ashainfracore.com"
                   className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors"
                 >
                   <img
@@ -65,7 +66,7 @@ const Footer = () => {
                   />
                 </a>
                 <a
-                  href="https://facebook.com"
+                  href="https://www.facebook.com/p/ASHA-Infracore-100066623525874/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors"
@@ -154,21 +155,24 @@ const Footer = () => {
             </div>
 
             {/* Contact Us */}
-            <div className="flex-shrink-0 w-full sm:w-auto">
-              <h3 className="text-lg font-semibold mb-3 pt-5 sm:pt-0 sm:ml-16">
-                Contact Us
-              </h3>
-              <div className="text-sm mb-3 sm:ml-16">
-                <input
-                  type="email"
-                  placeholder="Enter Your Email Address"
-                  className="w-60 px-5 py-2 bg-white rounded mb-2 outline-none placeholder-gray-500 text-black"
-                />
-              </div>
-              <button className="bg-white text-red-600 px-4 py-2 rounded font-medium hover:bg-gray-100 transition-colors text-sm sm:ml-16">
-                Notify Me
-              </button>
-            </div>
+           <div className="flex-shrink-0 w-full sm:w-auto">
+  <h3 className="text-lg font-semibold mb-3 pt-5 sm:pt-0 sm:ml-16">
+    Contact Us
+  </h3>
+  <div className="text-sm mb-3 sm:ml-16">
+    <input
+      type="email"
+      placeholder="Enter Your Email Address"
+      className="w-60 px-5 py-2 bg-white rounded mb-2 outline-none placeholder-gray-500 text-black"
+    />
+  </div>
+  <Link
+    to="/contact-us"
+    className="bg-white text-red-600 px-4 py-2 rounded font-medium hover:bg-gray-100 transition-colors text-sm sm:ml-16 inline-block"
+  >
+    Notify Me
+  </Link>
+</div>
           </div>
         </div>
       </div>

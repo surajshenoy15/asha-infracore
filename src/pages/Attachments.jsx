@@ -190,7 +190,7 @@ const Attachments = () => {
       </div>
 
       {/* Related Links - Modern Design */}
-      <div className="bg-gradient-to-br from-gray-100 to-gray-200 py-20 px-4">
+      {/* <div className="bg-gradient-to-br from-gray-100 to-gray-200 py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent mb-16 text-center">
             Related Links
@@ -264,7 +264,7 @@ const Attachments = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

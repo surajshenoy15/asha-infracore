@@ -136,9 +136,9 @@ export default function AboutUsPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-[#FF3600]/20 to-blue-600/20 rounded-3xl blur-3xl opacity-40 scale-105" />
               <div className="relative bg-white p-8 rounded-3xl shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                  src="/ceo.png"
                   alt="K.K. Shetty - Founder & CEO"
-                  className="w-full h-96 object-cover rounded-2xl shadow-lg"
+                  className="w-full h-full object-cover rounded-2xl shadow-lg"
                 />
                 <div className="absolute -bottom-6 -right-6 bg-[#FF3600] text-white p-4 rounded-2xl shadow-xl">
                   <Award className="w-8 h-8" />
