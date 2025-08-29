@@ -5,13 +5,44 @@ const Loaders = () => {
   const [loaders, setLoaders] = useState([]);
 
   useEffect(() => {
+    // ✅ Update SEO when page loads
+    document.title = "Bobcat Loaders – Asha Infracore | Best Bobcat Dealer in India";
+
+    const metaDescription = document.querySelector("meta[name='description']");
+    if (metaDescription) {
+      metaDescription.setAttribute(
+        "content",
+        "Explore high-performance Bobcat Loaders at Asha Infracore, the best Bobcat dealer in India. Durable, powerful, and reliable for all construction needs."
+      );
+    } else {
+      const newMeta = document.createElement("meta");
+      newMeta.name = "description";
+      newMeta.content = "Explore high-performance Bobcat Loaders at Asha Infracore, the best Bobcat dealer in India. Durable, powerful, and reliable for all construction needs.";
+      document.head.appendChild(newMeta);
+    }
+
+    const metaKeywords = document.querySelector("meta[name='keywords']");
+    if (metaKeywords) {
+      metaKeywords.setAttribute(
+        "content",
+        "Bobcat loaders India, skid steer loaders, compact track loaders, best Bobcat dealer India, Asha Infracore loaders"
+      );
+    } else {
+      const newKeywords = document.createElement("meta");
+      newKeywords.name = "keywords";
+      newKeywords.content = "Bobcat loaders India, skid steer loaders, compact track loaders, best Bobcat dealer India, Asha Infracore loaders";
+      document.head.appendChild(newKeywords);
+    }
+
     const fetchLoaders = async () => {
       try {
-        const res = await axios.get('https://asha-infracore-backend.onrender.com/api/products');
-        const filtered = res.data.filter(p => p.category === 'loaders');
+        const res = await axios.get(
+          "https://asha-infracore-backend.onrender.com/api/products"
+        );
+        const filtered = res.data.filter((p) => p.category === "loaders");
         setLoaders(filtered);
       } catch (err) {
-        console.error('Error fetching loaders:', err);
+        console.error("Error fetching loaders:", err);
       }
     };
     fetchLoaders();
@@ -21,7 +52,7 @@ const Loaders = () => {
     <div className="p-7">
       <h1 className="text-2xl font-bold mb-8">Loaders</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {loaders.map(loader => (
+        {loaders.map((loader) => (
           <div
             key={loader.id}
             className="bg-white rounded-xl shadow-lg p-8 max-w-sm mx-auto text-left h-120"
@@ -36,9 +67,7 @@ const Loaders = () => {
             <h3 className="text-xl font-bold text-gray-800 mb-1">
               {loader.name}
             </h3>
-            <p className="text-gray-600 text-s mb-4">
-              {loader.description}
-            </p>
+            <p className="text-gray-600 text-s mb-4">{loader.description}</p>
             <div className="text-s space-y-2">
               <div className="flex justify-between font-semibold text-gray-800">
                 <span>Horsepower</span>
@@ -47,7 +76,9 @@ const Loaders = () => {
 
               <div className="flex justify-between font-semibold text-gray-800">
                 <span>Rated Capacity</span>
-                <span className="font-normal">{loader.rated_operating_capacity} kg</span>
+                <span className="font-normal">
+                  {loader.rated_operating_capacity} kg
+                </span>
               </div>
 
               <div className="flex justify-between font-semibold text-gray-800">
@@ -63,4 +94,3 @@ const Loaders = () => {
 };
 
 export default Loaders;
-// loaders api page 
