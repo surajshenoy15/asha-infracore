@@ -42,12 +42,10 @@ export default function AdminDashboard() {
     recentQuotations: []
   });
 
+  // ✅ Removed redundant auth check — AdminRoute handles this
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) navigate('/admin-login');
-    });
     fetchQuotationData();
-  }, [navigate]);
+  }, []);
 
   const fetchQuotationData = async () => {
     try {
@@ -72,7 +70,6 @@ export default function AdminDashboard() {
         recentQuotations: quotations || []
       });
 
-      // Generate notifications
       generateNotifications(quotations || []);
     } catch (error) {
       console.error('Error:', error);
@@ -80,10 +77,10 @@ export default function AdminDashboard() {
   };
 
   const [emailNotifEnabled, setEmailNotifEnabled] = useState(true);
-const [formToggles, setFormToggles] = useState({
-  getInTouch: true,
-  getQuote: true
-});
+  const [formToggles, setFormToggles] = useState({
+    getInTouch: true,
+    getQuote: true
+  });
 
   const generateNotifications = (quotations) => {
     const now = new Date();
@@ -95,7 +92,6 @@ const [formToggles, setFormToggles] = useState({
 
     const newNotifications = [];
 
-    // Pending quotations notifications
     const pendingQuotations = quotations.filter(q => q.status === 'pending');
     if (pendingQuotations.length > 0) {
       newNotifications.push({
@@ -109,7 +105,6 @@ const [formToggles, setFormToggles] = useState({
       });
     }
 
-    // New quotations today
     const todayQuotations = quotations.filter(q => {
       const quotationDate = new Date(q.created_at);
       return quotationDate >= today;
@@ -127,7 +122,6 @@ const [formToggles, setFormToggles] = useState({
       });
     }
 
-    // Old pending quotations (more than 3 days)
     const oldPendingQuotations = quotations.filter(q => {
       if (q.status !== 'pending') return false;
       const quotationDate = new Date(q.created_at);
@@ -148,7 +142,6 @@ const [formToggles, setFormToggles] = useState({
       });
     }
 
-    // Recent approvals
     const recentApprovals = quotations.filter(q => {
       if (q.status !== 'approved') return false;
       const quotationDate = new Date(q.created_at);
@@ -194,16 +187,6 @@ const [formToggles, setFormToggles] = useState({
 
   const dismissNotification = (notificationId) => {
     setNotifications(prev => prev.filter(n => n.id !== notificationId));
-  };
-
-  const getNotificationIcon = (type) => {
-    switch (type) {
-      case 'warning': return Clock;
-      case 'error': return AlertTriangle;
-      case 'success': return CheckCircle;
-      case 'info': return FileText;
-      default: return Bell;
-    }
   };
 
   const getNotificationColors = (type, urgent = false) => {
@@ -258,189 +241,175 @@ const [formToggles, setFormToggles] = useState({
   const urgentNotificationsCount = notifications.filter(n => n.urgent).length;
   const totalNotificationsCount = notifications.length;
 
-const generatePDF = async (quotation) => {
-  try {
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.width;
-    const pageHeight = doc.internal.pageSize.height;
+  const generatePDF = async (quotation) => {
+    try {
+      const doc = new jsPDF();
+      const pageWidth = doc.internal.pageSize.width;
+      const pageHeight = doc.internal.pageSize.height;
 
-    const primaryColor = [255, 54, 0];
-    const secondaryColor = [102, 102, 102];
-    const lightGray = [245, 245, 245];
+      const primaryColor = [255, 54, 0];
+      const secondaryColor = [102, 102, 102];
+      const lightGray = [245, 245, 245];
 
-    // Function to load image as base64
-    const loadImageAsBase64 = (src) => {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
-          resolve(canvas.toDataURL('image/png'));
-        };
-        img.onerror = () => resolve(null);
-        img.src = src;
-      });
-    };
+      const loadImageAsBase64 = (src) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            resolve(canvas.toDataURL('image/png'));
+          };
+          img.onerror = () => resolve(null);
+          img.src = src;
+        });
+      };
 
-    // Load logos
-    const logoIconBase64 = await loadImageAsBase64(`${window.location.origin}/logo-asha.png`);
-    const logoTextBase64 = await loadImageAsBase64(`${window.location.origin}/logo-text.png`);
+      const logoIconBase64 = await loadImageAsBase64(`${window.location.origin}/logo-asha.png`);
+      const logoTextBase64 = await loadImageAsBase64(`${window.location.origin}/logo-text.png`);
 
-    // Header background
-    doc.setFillColor(...primaryColor);
-    doc.rect(0, 0, pageWidth, 40, 'F');
+      doc.setFillColor(...primaryColor);
+      doc.rect(0, 0, pageWidth, 40, 'F');
 
-    // Add logos (aligned)
-    if (logoIconBase64) {
-      doc.addImage(logoIconBase64, 'PNG', 15, 10, 18, 18); // small icon
-    }
+      if (logoIconBase64) {
+        doc.addImage(logoIconBase64, 'PNG', 15, 10, 18, 18);
+      }
 
-    if (logoTextBase64) {
-      doc.addImage(logoTextBase64, 'PNG', 36, 11, 45, 16); // horizontal logo
-    }
+      if (logoTextBase64) {
+        doc.addImage(logoTextBase64, 'PNG', 36, 11, 45, 16);
+      }
 
-    if (!logoIconBase64 && !logoTextBase64) {
+      if (!logoIconBase64 && !logoTextBase64) {
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(20);
+        doc.setFont('helvetica', 'bold');
+        doc.text('ASHA INFRACORE', 15, 25);
+      }
+
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(20);
       doc.setFont('helvetica', 'bold');
-      doc.text('ASHA INFRACORE', 15, 25);
-    }
+      doc.text('QUOTATION DETAILS', pageWidth - 15, 20, { align: 'right' });
 
-    // Header text
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(20);
-    doc.setFont('helvetica', 'bold');
-    doc.text('QUOTATION DETAILS', pageWidth - 15, 20, { align: 'right' });
-
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Professional Quotation Report', pageWidth - 15, 28, { align: 'right' });
-
-    // Quotation ID
-    const idText = `#${String(quotation.serial_id).padStart(3, '0')}`;
-    doc.setFillColor(...lightGray);
-    doc.roundedRect(15, 50, 60, 20, 3, 3, 'F');
-    doc.setTextColor(...primaryColor);
-    doc.setFontSize(16);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Quotation ID', 17, 58);
-    doc.setFontSize(20);
-    doc.text(idText, 17, 67);
-
-    // Status
-    const statusColor = quotation.status === 'approved'
-      ? [34, 197, 94]
-      : quotation.status === 'cancelled'
-      ? [239, 68, 68]
-      : [245, 158, 11];
-    doc.setFillColor(...statusColor);
-    doc.roundedRect(pageWidth - 65, 50, 50, 15, 3, 3, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'bold');
-    doc.text(quotation.status.toUpperCase(), pageWidth - 40, 60, { align: 'center' });
-
-    // Client Info Section
-    let yPos = 90;
-    doc.setTextColor(...primaryColor);
-    doc.setFontSize(16);
-    doc.setFont('helvetica', 'bold');
-    doc.text('CLIENT INFORMATION', 15, yPos);
-
-    const clientInfo = [
-      { label: 'Full Name', value: quotation.client_name || 'N/A' },
-      { label: 'Email Address', value: quotation.email || 'N/A' },
-      { label: 'Phone Number', value: quotation.phone || 'N/A' },
-      { label: 'Company', value: quotation.company || 'N/A' },
-      { label: 'City', value: quotation.city || 'N/A' }
-    ];
-
-    yPos += 15;
-    clientInfo.forEach((info, index) => {
-      const xPos = 15 + (index % 2) * (pageWidth / 2 - 20);
-      const cardY = yPos + Math.floor(index / 2) * 28;
-
-      doc.setFillColor(248, 250, 252);
-      doc.roundedRect(xPos, cardY, pageWidth / 2 - 25, 23, 2, 2, 'F');
-
-      doc.setTextColor(...secondaryColor);
-      doc.setFontSize(9);
-      doc.setFont('helvetica', 'bold');
-      doc.text(info.label.toUpperCase(), xPos + 5, cardY + 8);
-
-      doc.setTextColor(30, 30, 30);
       doc.setFontSize(11);
       doc.setFont('helvetica', 'normal');
-      const truncatedValue = info.value.length > 28 ? info.value.substring(0, 28) + '...' : info.value;
-      doc.text(truncatedValue, xPos + 5, cardY + 17);
-    });
+      doc.text('Professional Quotation Report', pageWidth - 15, 28, { align: 'right' });
 
-    // Product Interest Section
-    yPos += 85;
-    doc.setTextColor(...primaryColor);
-    doc.setFontSize(16);
-    doc.setFont('helvetica', 'bold');
-    doc.text('PRODUCT INTEREST', 15, yPos);
-    yPos += 10;
-
-    doc.setFillColor(255, 246, 235);
-    doc.roundedRect(15, yPos, pageWidth - 30, 30, 3, 3, 'F');
-    doc.setTextColor(30, 30, 30);
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'normal');
-
-    const productText = quotation.product_interest || 'No specific interest mentioned';
-    const splitProductText = doc.splitTextToSize(productText, pageWidth - 40);
-    doc.text(splitProductText, 20, yPos + 12);
-
-    // Additional Comments Section
-    if (quotation.comments && quotation.comments.trim() !== '') {
-      yPos += 45;
+      const idText = `#${String(quotation.serial_id).padStart(3, '0')}`;
+      doc.setFillColor(...lightGray);
+      doc.roundedRect(15, 50, 60, 20, 3, 3, 'F');
       doc.setTextColor(...primaryColor);
       doc.setFontSize(16);
       doc.setFont('helvetica', 'bold');
-      doc.text('ADDITIONAL COMMENTS', 15, yPos);
+      doc.text('Quotation ID', 17, 58);
+      doc.setFontSize(20);
+      doc.text(idText, 17, 67);
+
+      const statusColor = quotation.status === 'approved'
+        ? [34, 197, 94]
+        : quotation.status === 'cancelled'
+        ? [239, 68, 68]
+        : [245, 158, 11];
+      doc.setFillColor(...statusColor);
+      doc.roundedRect(pageWidth - 65, 50, 50, 15, 3, 3, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text(quotation.status.toUpperCase(), pageWidth - 40, 60, { align: 'center' });
+
+      let yPos = 90;
+      doc.setTextColor(...primaryColor);
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text('CLIENT INFORMATION', 15, yPos);
+
+      const clientInfo = [
+        { label: 'Full Name', value: quotation.client_name || 'N/A' },
+        { label: 'Email Address', value: quotation.email || 'N/A' },
+        { label: 'Phone Number', value: quotation.phone || 'N/A' },
+        { label: 'Company', value: quotation.company || 'N/A' },
+        { label: 'City', value: quotation.city || 'N/A' }
+      ];
+
+      yPos += 15;
+      clientInfo.forEach((info, index) => {
+        const xPos = 15 + (index % 2) * (pageWidth / 2 - 20);
+        const cardY = yPos + Math.floor(index / 2) * 28;
+
+        doc.setFillColor(248, 250, 252);
+        doc.roundedRect(xPos, cardY, pageWidth / 2 - 25, 23, 2, 2, 'F');
+
+        doc.setTextColor(...secondaryColor);
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.text(info.label.toUpperCase(), xPos + 5, cardY + 8);
+
+        doc.setTextColor(30, 30, 30);
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'normal');
+        const truncatedValue = info.value.length > 28 ? info.value.substring(0, 28) + '...' : info.value;
+        doc.text(truncatedValue, xPos + 5, cardY + 17);
+      });
+
+      yPos += 85;
+      doc.setTextColor(...primaryColor);
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text('PRODUCT INTEREST', 15, yPos);
       yPos += 10;
 
-      doc.setFillColor(250, 250, 250);
-      doc.roundedRect(15, yPos, pageWidth - 30, 35, 3, 3, 'F');
+      doc.setFillColor(255, 246, 235);
+      doc.roundedRect(15, yPos, pageWidth - 30, 30, 3, 3, 'F');
       doc.setTextColor(30, 30, 30);
-      doc.setFontSize(11);
+      doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
-      const splitComments = doc.splitTextToSize(quotation.comments, pageWidth - 40);
-      doc.text(splitComments, 20, yPos + 12);
+
+      const productText = quotation.product_interest || 'No specific interest mentioned';
+      const splitProductText = doc.splitTextToSize(productText, pageWidth - 40);
+      doc.text(splitProductText, 20, yPos + 12);
+
+      if (quotation.comments && quotation.comments.trim() !== '') {
+        yPos += 45;
+        doc.setTextColor(...primaryColor);
+        doc.setFontSize(16);
+        doc.setFont('helvetica', 'bold');
+        doc.text('ADDITIONAL COMMENTS', 15, yPos);
+        yPos += 10;
+
+        doc.setFillColor(250, 250, 250);
+        doc.roundedRect(15, yPos, pageWidth - 30, 35, 3, 3, 'F');
+        doc.setTextColor(30, 30, 30);
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'normal');
+        const splitComments = doc.splitTextToSize(quotation.comments, pageWidth - 40);
+        doc.text(splitComments, 20, yPos + 12);
+      }
+
+      const footerY = pageHeight - 35;
+      doc.setFillColor(...lightGray);
+      doc.rect(0, footerY, pageWidth, 35, 'F');
+
+      doc.setTextColor(...secondaryColor);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.text('© 2025 Asha Infracore. All rights reserved.', 15, footerY + 12);
+      doc.text(`Document ID: QUO-${quotation.serial_id}-${Date.now()}`, 15, footerY + 22);
+
+      doc.setTextColor(...primaryColor);
+      doc.setFontSize(9);
+      doc.text('Generated by Admin Dashboard', pageWidth - 15, footerY + 12, { align: 'right' });
+      doc.text(`Created: ${new Date(quotation.created_at).toLocaleDateString()}`, pageWidth - 15, footerY + 22, { align: 'right' });
+
+      const fileName = `Quotation_${String(quotation.serial_id).padStart(3, '0')}_${new Date().toISOString().split('T')[0]}.pdf`;
+      doc.save(fileName);
+    } catch (error) {
+      console.error('PDF generation failed:', error);
+      alert('Failed to generate PDF.');
     }
-
-    // Footer
-    const footerY = pageHeight - 35;
-    doc.setFillColor(...lightGray);
-    doc.rect(0, footerY, pageWidth, 35, 'F');
-
-    doc.setTextColor(...secondaryColor);
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.text('© 2025 Asha Infracore. All rights reserved.', 15, footerY + 12);
-    doc.text(`Document ID: QUO-${quotation.serial_id}-${Date.now()}`, 15, footerY + 22);
-
-    doc.setTextColor(...primaryColor);
-    doc.setFontSize(9);
-    doc.text('Generated by Admin Dashboard', pageWidth - 15, footerY + 12, { align: 'right' });
-    doc.text(`Created: ${new Date(quotation.created_at).toLocaleDateString()}`, pageWidth - 15, footerY + 22, { align: 'right' });
-
-    // Save
-    const fileName = `Quotation_${String(quotation.serial_id).padStart(3, '0')}_${new Date().toISOString().split('T')[0]}.pdf`;
-    doc.save(fileName);
-  } catch (error) {
-    console.error('PDF generation failed:', error);
-    alert('Failed to generate PDF.');
-  }
-};
-
-
+  };
 
   const filteredQuotations = quotationStats.recentQuotations.filter(quotation => {
     const matchesSearch = quotation.client_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -451,33 +420,33 @@ const generatePDF = async (quotation) => {
   });
 
   const stats = [
-    { 
-      label: 'Total Quotations', 
-      value: quotationStats.total, 
-      icon: FileText, 
+    {
+      label: 'Total Quotations',
+      value: quotationStats.total,
+      icon: FileText,
       bgColor: 'bg-[#FF3600]/10',
       iconColor: 'text-[#FF3600]'
     },
-    { 
-      label: 'Pending Reviews', 
-      value: quotationStats.pending, 
-      icon: TrendingUp, 
+    {
+      label: 'Pending Reviews',
+      value: quotationStats.pending,
+      icon: TrendingUp,
       bgColor: 'bg-amber-500/10',
       iconColor: 'text-amber-600'
     },
-    { 
-      label: 'Approved', 
-      value: quotationStats.approved, 
-      icon: Check, 
+    {
+      label: 'Approved',
+      value: quotationStats.approved,
+      icon: Check,
       bgColor: 'bg-emerald-500/10',
       iconColor: 'text-emerald-600'
     },
-    { 
-      label: 'This Month', 
-      value: quotationStats.recentQuotations.filter(q => 
+    {
+      label: 'This Month',
+      value: quotationStats.recentQuotations.filter(q =>
         new Date(q.created_at).getMonth() === new Date().getMonth()
-      ).length, 
-      icon: Calendar, 
+      ).length,
+      icon: Calendar,
       bgColor: 'bg-[#FF3600]/10',
       iconColor: 'text-[#FF3600]'
     }
@@ -487,7 +456,6 @@ const generatePDF = async (quotation) => {
     <div className="min-h-screen bg-gray-50 text-gray-900">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
-
         <div className="px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="w-10 h-10 bg-gradient-to-br from-[#FF3600] to-[#E62E00] rounded-xl flex items-center justify-center shadow-lg">
@@ -501,9 +469,9 @@ const generatePDF = async (quotation) => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            {/* Active Notification Button */}
+            {/* Notification Button */}
             <div className="relative">
-              <button 
+              <button
                 onClick={() => setShowNotifications(!showNotifications)}
                 className="relative p-2 text-gray-600 hover:text-[#FF3600] hover:bg-gray-100 rounded-lg transition-all duration-200"
               >
@@ -537,13 +505,13 @@ const generatePDF = async (quotation) => {
                       </p>
                     )}
                   </div>
-                  
+
                   <div className="max-h-80 overflow-y-auto">
                     {notifications.length > 0 ? (
                       notifications.map((notification) => {
                         const Icon = notification.icon;
                         const colors = getNotificationColors(notification.type, notification.urgent);
-                        
+
                         return (
                           <div key={notification.id} className={`p-4 border-b border-gray-100 ${colors.bg} border-l-4 ${notification.urgent ? 'border-l-red-500' : 'border-l-transparent'}`}>
                             <div className="flex items-start space-x-3">
@@ -602,15 +570,13 @@ const generatePDF = async (quotation) => {
       </header>
 
       <div className="flex flex-col lg:flex-row">
-  {/* Sidebar */}
-  <nav className="w-full lg:w-72 bg-white border-r border-gray-200 min-h-[300px] lg:min-h-screen p-6 shadow-sm">
-
+        {/* Sidebar */}
+        <nav className="w-full lg:w-72 bg-white border-r border-gray-200 min-h-[300px] lg:min-h-screen p-6 shadow-sm">
           <div className="space-y-2">
             {[
               { id: 'quotations', label: 'Quotations', icon: FileText, badge: quotationStats.pending },
               { id: 'products', label: 'Products', icon: Package },
               { id: 'attachments', label: 'Attachments', icon: Paperclip },
-              // { id: 'notifications', label: 'Notifications', icon: Bell }
             ].map((tab) => {
               const Icon = tab.icon;
               return (
@@ -799,15 +765,6 @@ const generatePDF = async (quotation) => {
               <AttachmentManager />
             </div>
           )}
-
-          {/* {activeTab === 'notifications' && (
-  <NotificationSettings
-    emailNotifEnabled={emailNotifEnabled}
-    setEmailNotifEnabled={setEmailNotifEnabled}
-    formToggles={formToggles}
-    setFormToggles={setFormToggles}
-  />
-)} */}
         </main>
       </div>
     </div>
