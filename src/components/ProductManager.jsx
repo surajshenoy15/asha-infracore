@@ -66,7 +66,7 @@ const closeToast = () => {
 
   const fetchProducts = async () => {
   try {
-    const res = await fetch('https://asha-infracore-backend.onrender.com/api/products');
+    const res = await fetch('https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/products');
     const data = await res.json();
     setProducts(data);
   } catch (err) {
@@ -193,8 +193,8 @@ const handleDuplicate = (product) => {
 
   try {
     const url = formData.id
-      ? `https://asha-infracore-backend.onrender.com/api/products/${formData.id}`
-      : 'https://asha-infracore-backend.onrender.com/api/products';
+      ? `https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/products/${formData.id}`
+      : 'https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/products';
     const method = formData.id ? 'PUT' : 'POST';
 
     await fetch(url, {
@@ -292,7 +292,7 @@ const handleDuplicate = (product) => {
   if (!window.confirm('Are you sure you want to delete this product?')) return;
 
   try {
-    await fetch(`https://asha-infracore-backend.onrender.com/api/products/${id}`, {
+    await fetch(`https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/products/${id}`, {
       method: 'DELETE',
     });
     showToast('Product deleted successfully!', 'success');

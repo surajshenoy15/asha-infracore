@@ -127,7 +127,7 @@ useEffect(() => {
 
   const fetchAttachments = async () => {
     try {
-      const res = await fetch('https://asha-infracore-backend.onrender.com/api/attachments');
+      const res = await fetch('https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/attachments');
       const data = await res.json();
       setAttachments(data);
     } catch (err) {
@@ -225,8 +225,8 @@ useEffect(() => {
     if (formData.specPdfFile) form.append('specPdfFile', formData.specPdfFile);
 
     const url = formData.id
-      ? `https://asha-infracore-backend.onrender.com/api/attachments/${formData.id}`
-      : `https://asha-infracore-backend.onrender.com/api/attachments/upload`;
+      ? `https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/attachments/${formData.id}`
+      : `https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/attachments/upload`;
 
     const method = formData.id ? 'PUT' : 'POST';
 
@@ -329,7 +329,7 @@ const handleDuplicate = (item) => {
     if (!window.confirm('Are you sure you want to delete this attachment?')) return;
     
     try {
-      const response = await fetch(`https://asha-infracore-backend.onrender.com/api/attachments/${id}`, { 
+      const response = await fetch(`https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/attachments/${id}`, { 
         method: 'DELETE' 
       });
       

@@ -10,7 +10,7 @@ const LiftingAttachments = () => {
   useEffect(() => {
     const fetchAttachments = async () => {
       try {
-        const res = await axios.get('https://asha-infracore-backend.onrender.com/api/attachments');
+        const res = await axios.get('https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/attachments');
         const filtered = res.data.filter(a =>
           a.category?.toLowerCase().replace(/[\s&]+/g, '-') === 'lifting-and-handling'
         );

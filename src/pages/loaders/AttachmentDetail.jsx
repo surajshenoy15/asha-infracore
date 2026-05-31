@@ -16,7 +16,7 @@ const AttachmentDetail = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('https://asha-infracore-backend.onrender.com/api/attachments')
+    fetch('https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/attachments')
       .then(res => res.json())
       .then(data => {
         setAllAttachments(data);

@@ -61,7 +61,7 @@ export default function ContactUs() {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://asha-infracore-backend.onrender.com/api/contact/send', {
+      const response = await fetch('https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/contact/send', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

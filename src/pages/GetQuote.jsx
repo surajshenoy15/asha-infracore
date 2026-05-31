@@ -54,7 +54,7 @@ export default function GetQuote() {
     }
 
     try {
-      const res = await fetch("https://asha-infracore-backend.onrender.com/api/quotations", {
+      const res = await fetch("https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/quotations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, productInterest: selectedInterest })

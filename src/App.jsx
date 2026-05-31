@@ -93,7 +93,7 @@ function App() {
           console.log('ℹ️ Existing push subscription found');
         }
 
-        const res = await fetch('https://asha-infracore-backend.onrender.com/api/notifications/subscribe', {
+        const res = await fetch('https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/notifications/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(subscription),

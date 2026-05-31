@@ -37,7 +37,7 @@ const Loaders = () => {
     const fetchLoaders = async () => {
       try {
         const res = await axios.get(
-          "https://asha-infracore-backend.onrender.com/api/products"
+          "https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/products"
         );
         const filtered = res.data.filter((p) => p.category === "loaders");
         setLoaders(filtered);

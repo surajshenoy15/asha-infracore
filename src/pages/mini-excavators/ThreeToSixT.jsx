@@ -8,7 +8,7 @@ const ThreeToSixT = () => {
   useEffect(() => {
     const fetchExcavators = async () => {
       try {
-        const res = await axios.get('https://asha-infracore-backend.onrender.com/api/products');
+        const res = await axios.get('https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/products');
         const filtered = res.data.filter(
           (p) => p.category?.toLowerCase().replace(/\s+/g, '-') === '3-6t-mini-excavators'
         );

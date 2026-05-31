@@ -25,7 +25,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('https://asha-infracore-backend.onrender.com/api/products')
+    fetch('https://rdy07ugwme.execute-api.ap-south-1.amazonaws.com/api/products')
       .then(res => res.json())
       .then(data => {
         setAllProducts(data);
